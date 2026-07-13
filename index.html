@@ -189,9 +189,13 @@
 
     <footer>
 
+        <div class="footer-bottom">
+            <img src="images/profile.png" alt="Footer image">
+        </div>
+
         <p>
 
-            © 2026 Paruchuru Chanikya
+            © 2026 Paruchuru Chanikya | All Rights Reserved
 
         </p>
 
@@ -202,30 +206,31 @@
 
     <!-- AI Chat -->
 
-<div id="chat-toggle">
+<div id="chat-toggle" aria-label="Open chat" role="button" tabindex="0">
     🤖
 </div>
 
-<div id="chat-box">
+<div id="chat-box" class="chat-hidden" aria-hidden="true">
 
     <div class="chat-header">
 
         <span>AI Assistant</span>
 
-        <button id="close-chat">✖</button>
+        <button id="close-chat" aria-label="Close chat">✖</button>
 
     </div>
 
-    <div id="chat-body"></div>
+    <div id="chat-body" aria-live="polite"></div>
 
     <div class="chat-input">
 
         <input
         id="userInput"
         type="text"
-        placeholder="Ask me anything...">
+        placeholder="Ask me anything..."
+        aria-label="Type your message">
 
-        <button id="sendBtn">
+        <button id="sendBtn" type="button">
             Send
         </button>
 

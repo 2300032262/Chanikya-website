@@ -1,51 +1,96 @@
-const sendBtn=document.getElementById("sendBtn");
-const input=document.getElementById("userInput");
-const body=document.getElementById("chat-body");
+const sendBtn = document.getElementById("sendBtn");
+const input = document.getElementById("userInput");
+const body = document.getElementById("chat-body");
+const toggle = document.getElementById("chat-toggle");
+const closeBtn = document.getElementById("close-chat");
+const chatBox = document.getElementById("chat-box");
 
-sendBtn.onclick=sendMessage;
+let isLoading = false;
 
-input.addEventListener("keypress",e=>{
-
-if(e.key==="Enter"){
-
-sendMessage();
-
+if (toggle) {
+    toggle.addEventListener("click", openChat);
+    toggle.addEventListener("keypress", e => {
+        if (e.key === "Enter") openChat();
+    });
 }
 
-});
+if (closeBtn) {
+    closeBtn.addEventListener("click", closeChat);
+}
 
-async function sendMessage(){
+if (sendBtn) {
+    sendBtn.addEventListener("click", sendMessage);
+}
 
-const message=input.value.trim();
+if (input) {
+    input.addEventListener("keypress", e => {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
+    });
+}
 
-if(message==="") return;
+function openChat() {
+    if (!chatBox) return;
+    chatBox.classList.remove("chat-hidden");
+    chatBox.setAttribute("aria-hidden", "false");
+    input?.focus();
+}
 
-body.innerHTML+=`<div class="user">${message}</div>`;
+function closeChat() {
+    if (!chatBox) return;
+    chatBox.classList.add("chat-hidden");
+    chatBox.setAttribute("aria-hidden", "true");
+}
 
-input.value="";
+function appendMessage(text, role) {
+    if (!body) return;
+    const messageEl = document.createElement("div");
+    messageEl.className = role === "user" ? "user" : "bot";
+    messageEl.textContent = text;
+    body.appendChild(messageEl);
+    body.scrollTop = body.scrollHeight;
+    return messageEl;
+}
 
-const response=await fetch("backend/chat.php",{
+async function sendMessage() {
+    if (!input || !body || !sendBtn || isLoading) return;
 
-method:"POST",
+    const message = input.value.trim();
+    if (message === "") return;
 
-headers:{
+    appendMessage(message, "user");
+    input.value = "";
+    input.focus();
 
-"Content-Type":"application/json"
+    const loadingEl = appendMessage("Typing...", "bot");
+    loadingEl.classList.add("loading");
+    setLoading(true);
 
-},
+    try {
+        const response = await fetch("backend/chat.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message })
+        });
 
-body:JSON.stringify({
+        const data = await response.json();
+        const reply = data.reply || "Sorry, something went wrong. Please try again.";
+        loadingEl.textContent = reply;
+        loadingEl.classList.remove("loading");
+    } catch (error) {
+        loadingEl.textContent = "Chat service unavailable. Please try again later.";
+        loadingEl.classList.remove("loading");
+        console.error(error);
+    }
 
-message
+    setLoading(false);
+}
 
-})
-
-});
-
-const data=await response.json();
-
-body.innerHTML+=`<div class="bot">${data.reply}</div>`;
-
-body.scrollTop=body.scrollHeight;
-
+function setLoading(state) {
+    isLoading = state;
+    if (sendBtn) sendBtn.disabled = state;
+    if (input) input.disabled = state;
 }
