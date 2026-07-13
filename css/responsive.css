@@ -1,0 +1,307 @@
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+/* Large Laptop */
+
+@media (max-width:1200px){
+
+.hero{
+    width:95%;
+}
+
+.hero-left h1{
+    font-size:55px;
+}
+
+.hero-right img{
+    width:330px;
+    height:330px;
+}
+
+}
+
+/* Laptop */
+
+@media (max-width:992px){
+
+.navbar{
+
+    width:95%;
+    flex-wrap:wrap;
+    padding:15px 0;
+
+}
+
+.nav-links{
+
+    gap:20px;
+
+}
+
+.hero{
+
+    flex-direction:column-reverse;
+    justify-content:center;
+    text-align:center;
+
+    padding-top:120px;
+
+}
+
+.hero-left{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+}
+
+.hero-left p{
+
+    max-width:100%;
+
+}
+
+.buttons{
+
+    justify-content:center;
+
+}
+
+.social{
+
+    justify-content:center;
+
+}
+
+.hero-right img{
+
+    width:300px;
+    height:300px;
+
+}
+
+.cards{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+/* Tablet */
+
+@media (max-width:768px){
+
+.navbar{
+
+    flex-direction:column;
+    height:auto;
+    padding:20px 0;
+
+}
+
+.logo{
+
+    margin-bottom:15px;
+
+}
+
+.nav-links{
+
+    flex-wrap:wrap;
+    justify-content:center;
+
+}
+
+.hero{
+
+    min-height:auto;
+    padding-top:180px;
+
+}
+
+.hero-left h1{
+
+    font-size:42px;
+
+}
+
+.hero-left h2{
+
+    font-size:28px;
+
+}
+
+.hero-left h3{
+
+    font-size:22px;
+
+}
+
+.hero-right img{
+
+    width:260px;
+    height:260px;
+
+}
+
+.buttons{
+
+    flex-direction:column;
+    width:100%;
+
+}
+
+.btn,
+.btn2{
+
+    width:220px;
+    text-align:center;
+
+}
+
+.cards{
+
+    grid-template-columns:1fr;
+
+}
+
+section{
+
+    padding:70px 20px;
+
+}
+
+section h2{
+
+    font-size:34px;
+
+}
+
+}
+
+/* Mobile */
+
+@media (max-width:576px){
+
+.logo{
+
+    font-size:24px;
+
+}
+
+.nav-links{
+
+    gap:12px;
+
+}
+
+.nav-links a{
+
+    font-size:14px;
+
+}
+
+.login-btn{
+
+    margin-top:15px;
+
+}
+
+.hero{
+
+    padding-top:200px;
+
+}
+
+.hero-left h1{
+
+    font-size:34px;
+
+}
+
+.hero-left h2{
+
+    font-size:22px;
+
+}
+
+.hero-left p{
+
+    font-size:15px;
+
+}
+
+.hero-right img{
+
+    width:220px;
+    height:220px;
+
+}
+
+.social{
+
+    gap:15px;
+
+}
+
+.social a{
+
+    width:40px;
+    height:40px;
+
+}
+
+.card{
+
+    padding:30px;
+
+}
+
+.project-card{
+
+    padding:25px;
+
+}
+
+footer{
+
+    font-size:14px;
+
+}
+
+}
+
+/* Small Mobile */
+
+@media (max-width:400px){
+
+.hero-left h1{
+
+    font-size:28px;
+
+}
+
+.hero-left h2{
+
+    font-size:20px;
+
+}
+
+.hero-right img{
+
+    width:180px;
+    height:180px;
+
+}
+
+.btn,
+.btn2{
+
+    width:100%;
+
+}
+
+}

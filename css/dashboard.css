@@ -1,0 +1,228 @@
+/* ===============================
+ADMIN DASHBOARD
+================================ */
+
+
+body{
+
+background:#020617;
+
+}
+
+
+
+.dashboard{
+
+display:flex;
+
+min-height:100vh;
+
+}
+
+
+
+/* Sidebar */
+
+
+.sidebar{
+
+width:260px;
+
+background:#1e293b;
+
+padding:30px;
+
+}
+
+
+
+.sidebar h2{
+
+color:#38bdf8;
+
+margin-bottom:40px;
+
+}
+
+
+
+.sidebar ul{
+
+list-style:none;
+
+}
+
+
+
+.sidebar li{
+
+margin:25px 0;
+
+}
+
+
+
+.sidebar a{
+
+color:white;
+
+text-decoration:none;
+
+font-size:18px;
+
+}
+
+
+
+.sidebar a:hover{
+
+color:#38bdf8;
+
+}
+
+
+
+/* Content */
+
+
+.dashboard-content{
+
+flex:1;
+
+padding:50px;
+
+}
+
+
+
+.dashboard-content h1{
+
+font-size:40px;
+
+}
+
+
+
+/* Cards */
+
+
+.dashboard-cards{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:30px;
+
+margin-top:50px;
+
+}
+
+
+
+.dashboard-card{
+
+background:#1e293b;
+
+padding:40px;
+
+border-radius:20px;
+
+text-align:center;
+
+}
+
+
+
+.dashboard-card i{
+
+font-size:50px;
+
+color:#38bdf8;
+
+}
+
+
+
+.dashboard-card h2{
+
+font-size:45px;
+
+margin:20px 0;
+
+}
+
+
+
+.dashboard-card p{
+
+color:#94a3b8;
+
+}
+
+
+/* Admin Forms */
+
+
+.admin-form{
+
+background:#1e293b;
+
+padding:30px;
+
+border-radius:15px;
+
+margin:30px 0;
+
+}
+
+
+.admin-form input,
+.admin-form textarea{
+
+
+width:100%;
+
+padding:15px;
+
+background:#334155;
+
+border:none;
+
+outline:none;
+
+border-radius:10px;
+
+color:white;
+
+font-size:16px;
+
+
+}
+
+
+.admin-form textarea{
+
+height:120px;
+
+resize:none;
+
+}
+
+.dashboard-card img{
+
+border-radius:10px;
+
+margin-top:15px;
+
+max-width:100%;
+
+}
+
+
+
+
+
+
+
+
