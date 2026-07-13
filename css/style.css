@@ -1564,6 +1564,152 @@ transform:translateY(0);
 
 }
 
+/* ===============================
+CONTACT STATUS
+================================ */
+
+#status{
+
+margin-top:20px;
+
+font-size:18px;
+
+font-weight:600;
+
+text-align:center;
+
+transition:.3s;
+
+}
+
+.card form{
+
+width:100%;
+
+}
+
+.card form button{
+
+width:100%;
+
+font-size:18px;
+
+cursor:pointer;
+
+}
+
+.card{
+
+box-shadow:0 0 25px rgba(0,0,0,.25);
+
+}
+
+.card:hover{
+
+box-shadow:0 0 35px rgba(37,99,235,.4);
+
+}
+
+
+/*==============================
+LOADER
+==============================*/
+
+#loader{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100vh;
+
+background:#0f172a;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:99999;
+
+transition:opacity .8s;
+
+}
+
+.spinner{
+
+width:70px;
+
+height:70px;
+
+border:6px solid #334155;
+
+border-top:6px solid #38bdf8;
+
+border-radius:50%;
+
+animation:spin 1s linear infinite;
+
+margin-bottom:25px;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+#loader h2{
+
+color:#38bdf8;
+
+font-size:38px;
+
+margin-bottom:10px;
+
+letter-spacing:2px;
+
+}
+
+#loader p{
+
+color:#cbd5e1;
+
+font-size:18px;
+
+}
+
+.loader-hide{
+
+opacity:0;
+
+visibility:hidden;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
