@@ -6,40 +6,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("Portfolio Loaded Successfully");
 
+    // ===============================
     // Navbar Effect
+    // ===============================
+
     const navbar = document.querySelector("header");
 
-    window.addEventListener("scroll", () => {
+    if(navbar){
 
-        if (window.scrollY > 80) {
+        window.addEventListener("scroll", () => {
 
-            navbar.style.background = "#020617";
-            navbar.style.boxShadow = "0 5px 20px rgba(0,0,0,.4)";
+            if(window.scrollY > 80){
 
-        } else {
+                navbar.style.background = "#020617";
+                navbar.style.boxShadow = "0 5px 20px rgba(0,0,0,.4)";
 
-            navbar.style.background = "rgba(15,23,42,.9)";
-            navbar.style.boxShadow = "none";
+            }else{
 
-        }
+                navbar.style.background = "rgba(15,23,42,.9)";
+                navbar.style.boxShadow = "none";
 
-    });
+            }
+
+        });
+
+    }
 
 });
+
 
 // ===============================
 // Smooth Scroll
 // ===============================
 
-document.querySelectorAll('a[href^="#"]').forEach(link => {
+document.querySelectorAll('a[href^="#"]').forEach(link=>{
 
-    link.addEventListener("click", function(e) {
+    link.addEventListener("click",function(e){
 
-        e.preventDefault();
+        const href=this.getAttribute("href");
 
-        const target = document.querySelector(this.getAttribute("href"));
+        if(href==="#") return;
+
+        const target=document.querySelector(href);
 
         if(target){
+
+            e.preventDefault();
 
             target.scrollIntoView({
 
@@ -53,42 +65,41 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
 });
 
+
 // ===============================
 // Scroll Progress Bar
 // ===============================
 
-const progress = document.createElement("div");
+const progress=document.createElement("div");
 
-progress.id = "progress-bar";
+progress.id="progress-bar";
 
 document.body.appendChild(progress);
 
-window.addEventListener("scroll", () => {
+window.addEventListener("scroll",()=>{
 
-    let totalHeight =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
+    const totalHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;
 
-    let progressHeight =
-        (window.pageYOffset / totalHeight) * 100;
+    const progressHeight=(window.pageYOffset/totalHeight)*100;
 
-    progress.style.width = progressHeight + "%";
+    progress.style.width=progressHeight+"%";
 
 });
+
 
 // ===============================
 // Back To Top Button
 // ===============================
 
-const topBtn = document.createElement("button");
+const topBtn=document.createElement("button");
 
-topBtn.innerHTML = "↑";
+topBtn.innerHTML="↑";
 
-topBtn.id = "topBtn";
+topBtn.id="topBtn";
 
 document.body.appendChild(topBtn);
 
-topBtn.onclick = () => {
+topBtn.onclick=()=>{
 
     window.scrollTo({
 
@@ -106,9 +117,7 @@ window.addEventListener("scroll",()=>{
 
         topBtn.style.display="block";
 
-    }
-
-    else{
+    }else{
 
         topBtn.style.display="none";
 
@@ -116,80 +125,83 @@ window.addEventListener("scroll",()=>{
 
 });
 
+
 // ===============================
 // Typing Animation
 // ===============================
 
-const titles = [
+const typingElement=document.querySelector(".hero-left h2");
 
-    "Full Stack Developer",
-    "Java Developer",
-    "Frontend Developer",
-    "Web Designer"
+if(typingElement){
 
-];
+    const titles=[
 
-let count = 0;
+        "Full Stack Developer",
+        "Java Developer",
+        "Frontend Developer",
+        "Web Designer"
 
-let index = 0;
+    ];
 
-let currentText = "";
+    let count=0;
 
-let letter = "";
+    let index=0;
 
-(function type(){
+    let currentText="";
 
-    if(document.querySelector(".hero-left h2")){
+    let letter="";
 
-        if(count === titles.length){
+    (function type(){
 
-            count = 0;
+        if(count===titles.length){
+
+            count=0;
 
         }
 
-        currentText = titles[count];
+        currentText=titles[count];
 
-        letter = currentText.slice(0, ++index);
+        letter=currentText.slice(0,++index);
 
-        document.querySelector(".hero-left h2").textContent = letter;
+        typingElement.textContent=letter;
 
-        if(letter.length === currentText.length){
+        if(letter.length===currentText.length){
 
             count++;
 
-            index = 0;
+            index=0;
 
             setTimeout(type,1500);
 
-        }
-
-        else{
+        }else{
 
             setTimeout(type,120);
 
         }
 
-    }
+    })();
 
-})();
+}
+
 
 // ===============================
 // Reveal Animation
 // ===============================
 
-const reveals = document.querySelectorAll("section");
+// Skip login page
+const reveals=document.querySelectorAll("section:not(.login-section)");
 
 function revealSections(){
 
     reveals.forEach(section=>{
 
-        const windowHeight = window.innerHeight;
+        const windowHeight=window.innerHeight;
 
-        const revealTop = section.getBoundingClientRect().top;
+        const revealTop=section.getBoundingClientRect().top;
 
-        const revealPoint = 120;
+        const revealPoint=120;
 
-        if(revealTop < windowHeight - revealPoint){
+        if(revealTop<windowHeight-revealPoint){
 
             section.classList.add("active");
 
@@ -203,11 +215,12 @@ window.addEventListener("scroll",revealSections);
 
 revealSections();
 
+
 // ===============================
 // Counter Animation
 // ===============================
 
-const counters = document.querySelectorAll(".counter");
+const counters=document.querySelectorAll(".counter");
 
 counters.forEach(counter=>{
 
@@ -217,19 +230,17 @@ counters.forEach(counter=>{
 
         const target=+counter.getAttribute("data-target");
 
-        const c=+counter.innerText;
+        const current=+counter.innerText;
 
         const increment=target/100;
 
-        if(c<target){
+        if(current<target){
 
-            counter.innerText=`${Math.ceil(c+increment)}`;
+            counter.innerText=Math.ceil(current+increment);
 
             setTimeout(updateCounter,20);
 
-        }
-
-        else{
+        }else{
 
             counter.innerText=target;
 
@@ -241,16 +252,15 @@ counters.forEach(counter=>{
 
 });
 
+
 // ===============================
 // Footer Year
 // ===============================
 
-const footer = document.querySelector("footer p");
+const footer=document.querySelector("footer p");
 
 if(footer){
 
-    footer.innerHTML =
-
-    `© ${new Date().getFullYear()} Paruchuru Chanikya | All Rights Reserved`;
+    footer.innerHTML=`© ${new Date().getFullYear()} Paruchuru Chanikya | All Rights Reserved`;
 
 }
