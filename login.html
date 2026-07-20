@@ -2,87 +2,154 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Paruchuru Chanikya</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        .login-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg, #0f172a);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 18px;
+            padding: 40px 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+        }
 
-<title>Admin Login | Chanikya Portfolio</title>
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 6px;
+            font-size: 1.8rem;
+        }
 
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/responsive.css">
+        .login-box p.subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 26px;
+            font-size: .9rem;
+        }
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        .login-box .input-box {
+            width: 100%;
+            margin-bottom: 16px;
+        }
 
+        .login-box .btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+        }
+
+        .login-status {
+            text-align: center;
+            margin-top: 14px;
+            font-size: .9rem;
+            min-height: 20px;
+        }
+
+        .login-back {
+            text-align: center;
+            margin-top: 18px;
+            font-size: .85rem;
+        }
+
+        .login-back a {
+            color: #38bdf8;
+        }
+    </style>
 </head>
 
-<body>
+<body class="login-page">
 
-<section class="login-section">
+    <section class="login-section">
+        <div class="login-box">
+            <h2>CHANIKYA</h2>
+            <p class="subtitle">Admin Portal — Please sign in</p>
 
-<div class="login-box">
+            <form id="login-form" method="POST" action="backend/auth/login.php">
+                <input
+                    type="text"
+                    name="username"
+                    class="input-box"
+                    placeholder="Username"
+                    required
+                    autocomplete="username">
 
-<div class="login-logo">
+                <input
+                    type="password"
+                    name="password"
+                    class="input-box"
+                    placeholder="Password"
+                    required
+                    autocomplete="current-password">
 
-<i class="fa-solid fa-user-shield"></i>
+                <button type="submit" class="btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
 
-</div>
+                <p id="login-status" class="login-status"></p>
+            </form>
 
-<h1>Admin Login</h1>
+            <div class="login-back">
+                <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Website</a>
+            </div>
+        </div>
+    </section>
 
-<p>Manage your portfolio website</p>
+    <script>
+        const form = document.getElementById("login-form");
+        const status = document.getElementById("login-status");
 
-<form action="backend/auth/login.php" method="POST">
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
 
-<div class="input-group">
+            status.style.color = "#38bdf8";
+            status.textContent = "⏳ Signing in...";
 
-<i class="fa-solid fa-user"></i>
+            const formData = new FormData(form);
 
-<input
-type="text"
-name="username"
-placeholder="Username"
-required>
+            try {
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    headers: { "Accept": "application/json" },
+                    body: formData,
+                    redirect: "manual"
+                });
 
-</div>
+                // On success PHP redirects to admin/dashboard.php
+                if (response.type === "opaqueredirect" || response.redirected || response.status === 302 || response.status === 0) {
+                    window.location.href = "admin/dashboard.php";
+                    return;
+                }
 
-<div class="input-group">
+                let data = {};
+                try {
+                    data = await response.json();
+                } catch (_) {}
 
-<i class="fa-solid fa-lock"></i>
-
-<input
-type="password"
-name="password"
-placeholder="Password"
-required>
-
-</div>
-
-<button
-type="submit"
-class="btn login-button">
-
-Login
-
-</button>
-
-</form>
-
-<br>
-
-<a href="index.html">
-
-<i class="fa-solid fa-arrow-left"></i>
-
-Back to Website
-
-</a>
-
-</div>
-
-</section>
-
-<script src="js/main.js"></script>
+                if (data.success) {
+                    window.location.href = data.redirect || "admin/dashboard.php";
+                } else {
+                    status.style.color = "#ef4444";
+                    status.textContent = data.message || "❌ Invalid username or password.";
+                }
+            } catch (error) {
+                // Network-level redirect (opaque) still means success here
+                window.location.href = "admin/dashboard.php";
+            }
+        });
+    </script>
 
 </body>
 

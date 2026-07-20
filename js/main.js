@@ -264,3 +264,44 @@ if(footer){
     footer.innerHTML=`© ${new Date().getFullYear()} Paruchuru Chanikya | All Rights Reserved`;
 
 }
+
+
+// ===============================
+// Dark / Light Mode
+// ===============================
+
+const themeToggle = document.getElementById("themeToggle");
+const body = document.body;
+const icon = themeToggle ? themeToggle.querySelector("i") : null;
+
+// Load saved theme
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+    body.classList.add("light-mode");
+    if (icon) {
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+    }
+} else {
+    body.classList.add("dark-mode");
+}
+
+if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+        body.classList.toggle("light-mode");
+        body.classList.toggle("dark-mode");
+
+        if (body.classList.contains("light-mode")) {
+            if (icon) {
+                icon.classList.replace("fa-moon", "fa-sun");
+            }
+            localStorage.setItem("theme", "light");
+        } else {
+            if (icon) {
+                icon.classList.replace("fa-sun", "fa-moon");
+            }
+            localStorage.setItem("theme", "dark");
+        }
+    });
+}

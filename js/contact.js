@@ -1,42 +1,56 @@
 // ================================
-// EmailJS Contact Form
+// Contact Form -> Backend API
 // ================================
-
-// Replace with your EmailJS Public Key
-emailjs.init({
-    publicKey: "YOUR_PUBLIC_KEY"
-});
 
 const contactForm = document.getElementById("contact-form");
 const status = document.getElementById("status");
 
-contactForm.addEventListener("submit", function (e) {
+// Field id mapping: the PHP backend expects name, email, subject, message
+const FIELD_MAP = {
+    from_name: "name",
+    from_email: "email",
+    subject: "subject",
+    message: "message"
+};
 
-    e.preventDefault();
+if (contactForm) {
+    contactForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-    status.innerHTML = "⏳ Sending...";
-    status.style.color = "#38bdf8";
+        status.innerHTML = "⏳ Sending...";
+        status.style.color = "#38bdf8";
 
-    emailjs.sendForm(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
-        this
-    )
-    .then(() => {
+        const raw = new FormData(contactForm);
+        const payload = {};
+        raw.forEach((value, key) => {
+            const mapped = FIELD_MAP[key] || key;
+            payload[mapped] = value;
+        });
 
-        status.innerHTML = "✅ Message Sent Successfully!";
-        status.style.color = "#22c55e";
+        try {
+            const response = await fetch("backend/api/contact.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
 
-        contactForm.reset();
+            let data = {};
+            try {
+                data = await response.json();
+            } catch (_) {}
 
-    })
-    .catch((error) => {
-
-        console.log(error);
-
-        status.innerHTML = "❌ Failed to send message!";
-        status.style.color = "#ef4444";
-
+            if (response.ok && data.success) {
+                status.innerHTML = "✅ " + (data.message || "Message Sent Successfully!");
+                status.style.color = "#22c55e";
+                contactForm.reset();
+            } else {
+                status.innerHTML = "❌ " + (data.message || "Failed to send message!");
+                status.style.color = "#ef4444";
+            }
+        } catch (error) {
+            console.error(error);
+            status.innerHTML = "❌ Could not reach the server. Please try again.";
+            status.style.color = "#ef4444";
+        }
     });
-
-});
+}
